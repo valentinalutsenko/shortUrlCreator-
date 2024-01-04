@@ -1,7 +1,7 @@
 <?php
     session_start();
-    require_once __DIR__  . '/shorten.php';
-    require_once __DIR__  .'/redirect.php';
+    // require_once __DIR__  . '/shorten.php';
+    // require_once __DIR__  .'/redirect.php';
 
 
     function debug($data) {
@@ -29,18 +29,17 @@
                 <div class="input-group mb-3">
                     <input type="url" class="form-control" name="url" placeholder="Введите ссылку..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" name="button" type="submit">Вперед</button>
+                        <button class="btn btn-outline-secondary" name="btn" type="submit">Вперед</button>
                     </div>
                 </div>
              </form>
 
              <?php
+            
                 if(isset($_SESSION['feedback'])) {
                     echo "<p>". $_SESSION['feedback'] ."</p>";
                     unset($_SESSION['feedback']);
                 }
-                
-                debug($shortUrl);
 
              ?>
     </div>

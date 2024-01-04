@@ -2,7 +2,7 @@
 require_once __DIR__ . '/classes/ShortUrlCreator.php';
 
 if(isset($_GET['code'])) {
-    
+
     $shortUrl = new ShortUrlCreator();
     $code = $_GET['code'];
 
@@ -12,3 +12,4 @@ if(isset($_GET['code'])) {
     }
     header('Location: index.php');
 }
+
