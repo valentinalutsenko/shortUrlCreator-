@@ -2,11 +2,11 @@
 
 class ShortUrlCreator 
 {
-    protected $pdo;
+    protected $db;
 
-    public function __construct(PDO $pdo) 
-    {
-        $this->pdo = $pdo;
+    public function __construct() 
+    {  
+        $this->db = new Mysqli('localhost', 'root', '', 'short_urls');
     }
 
 
@@ -27,32 +27,31 @@ class ShortUrlCreator
             return '';
         }
        //обращаемся к бд и возвращаем код, соотвествующий переданному url.
-        $url = $this->pdo->quote($url);
-        $exsists = $this->pdo->prepare("SELECT code FROM short_urls WHERE url = '{$url}'");
+        $url = $this->db->escape_string($url);
+        $exsists = $this->db->query("SELECT code FROM short_urls WHERE url = '{$url}'");
 
         // Ecли кода нет, то записываем в бд url и дату создания, потом генерируем код с помощью метода generateCode
-        if($exsists->rowCount()) {
-            return $exsists->fetchColumn();
+        if($exsists->num_rows) {
+            return $exsists->fetch_object();
         }else {
-            $this->pdo->prepare("INSERT INTO short_urls(url, created VALUES('{$url}, NOW())')");
+            $this->db->query("INSERT INTO short_urls(url, created VALUES('{$url}, NOW())')");
         }
 
-        $code = $this->generateCode($this->pdo->lastInsertId());
+        $code = $this->generateCode($this->db->insert_id);
 
-        $this->pdo->prepare("UPDATE links SET code = '{$code}' WHERE url = '{$url}'");
+        $this->db->query("UPDATE links SET code = '{$code}' WHERE url = '{$url}'");
    
         return $code;
 
     }
 
-
     public function getUrl($code) 
     {
-        $code = $this->pdo->quote($code);
-        $code = $this->pdo->prepare("SELECT url FROM short_urls WHERE code = '{$code}'");
+        $code = $this->db->escape_string($code);
+        $code = $this->db->query("SELECT url FROM short_urls WHERE code = '{$code}'");
 
-        if($code->rowCount()) {
-            return $code->fetchColumn()->url;
+        if($code->num_rows) {
+            return $code->fetch_object()->url;
         }
 
         return '';

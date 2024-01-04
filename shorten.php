@@ -2,15 +2,14 @@
 session_start();
 require_once __DIR__ . '/classes/ShortUrlCreator.php';
 
-global $pdo;
 
-$shortUrl = new ShortUrlCreator($pdo);
+$shortUrl = new ShortUrlCreator();
 
-if(isset($_POST['button'])) {
-    $url = $_POST['button'];
+if(isset($_POST['url'])) {
+    $url = $_POST['url'];
 
     if($code = $shortUrl->createCode($url)) {
-        $_SESSION['feedback'] = "Готово! Вот ваша ссылка: <a href='http://localhost/shorturlcreator-/$code'>http://localhost/shorturlcreator-/$code</a>";
+        $_SESSION['feedback'] = "Готово! Вот ваша ссылка: <a href='http://localhost/test/$code'>http://localhost/test/$code</a>";
     } else {
         $_SESSION['feedback'] = "Ошибка! Возможно, некорректный URL?";
     }
