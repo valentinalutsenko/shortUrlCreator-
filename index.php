@@ -17,9 +17,9 @@
       
             <form  method="POST">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="cut_link" placeholder="Введите ссылку..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" name="url" placeholder="Введите ссылку..." aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" name="" type="submit">Вперед</button>
+                        <button class="btn btn-outline-secondary" name="button" type="submit">Вперед</button>
                     </div>
                 </div>
              </form>

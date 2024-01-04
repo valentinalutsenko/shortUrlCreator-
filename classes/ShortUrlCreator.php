@@ -46,7 +46,8 @@ class ShortUrlCreator
     }
 
 
-    public function getUrl($code) {
+    public function getUrl($code) 
+    {
         $code = $this->pdo->quote($code);
         $code = $this->pdo->prepare("SELECT url FROM short_urls WHERE code = '{$code}'");
 
@@ -57,8 +58,5 @@ class ShortUrlCreator
         return '';
     }
     
-
-    
-
 }
  
