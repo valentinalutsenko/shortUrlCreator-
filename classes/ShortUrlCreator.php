@@ -34,7 +34,7 @@ class ShortUrlCreator
         if($exsists->rowCount()) {
             return $exsists->fetchColumn();
         }else {
-            $this->pdo->prepare("INSERT INTO short_url(url, created VALUES('{$url}, NOW())')");
+            $this->pdo->prepare("INSERT INTO short_urls(url, created VALUES('{$url}, NOW())')");
         }
 
         $code = $this->generateCode($this->pdo->lastInsertId());
@@ -44,6 +44,19 @@ class ShortUrlCreator
         return $code;
 
     }
+
+
+    public function getUrl($code) {
+        $code = $this->pdo->quote($code);
+        $code = $this->pdo->prepare("SELECT url FROM short_urls WHERE code = '{$code}'");
+
+        if($code->rowCount()) {
+            return $code->fetchColumn()->url;
+        }
+
+        return '';
+    }
+    
 
     
 
